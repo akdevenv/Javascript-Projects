@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+</head>
+<body class="font-mono">
+     <div id="nav" class="border rounded-sm bg-indigo-400">
+        <nav class="max-w-screen-2xl">
+            <ul class="flex justify-center">
+                <li class="border text-lg rounded-xl bg-white py-3 px-10 m-3"><a href="#">Home</a></li>
+                <li class="border text-lg rounded-xl bg-white p-3 m-3"><a href="https://github.com/akdevenv">Github Link</a></li>
+            </ul>
+        </nav>
+     </div>
+     <div id="main" class="min-h-screen-28 pt-28">
+        <div class="max-w-screen flex flex-col items-center">
+            <h1 class="bold font-mono text-6xl m-8">Color Theme Switcher</h1>
+            <div id="color-tab flex m-8 sm:flex-wrap">
+                <button class="border p-24 bg-gray-300"></button>
+                <button class="border p-24 bg-white"></button>
+                <button class="border p-24 bg-red-300"></button>
+                <button class="border p-24 bg-blue-300"></button>
+            </div>
+            <h2 class="font-sans text-xl m-8">Try clicking any color to change the color of the page</h2>
+        </div>
+     </div>
+     <script src="/script.js"></script>
+</body>
+</html>
