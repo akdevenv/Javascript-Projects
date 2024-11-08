@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Digital Clock</title>
+</head>
+<body class="bg-gradient-to-r from-indigo-800 via-purple-800 to-pink-800 text-white font-mono flex items-center justify-center min-h-screen">
+
+    <!-- Clock Container -->
+    <div class="bg-gray-900 bg-opacity-70 backdrop-blur-lg shadow-xl rounded-lg p-10 text-center max-w-md w-full">
+        <h1 class="text-4xl font-semibold text-gray-200 mb-4 animate-pulse">Digital Clock</h1>
+        <div id="clock" class="text-6xl font-bold text-blue-300 tracking-wide select-none"></div>
+        <p class="text-gray-400 mt-4">Current time in your timezone</p>
+    </div>
+
+    <!-- JavaScript to update the time every second -->
+    <script>
+        const clock = document.getElementById('clock');
+
+        setInterval(() => {
+            let date = new Date();
+
+            // Update the clock with the current time
+            clock.innerText = date.toLocaleTimeString();
+
+        }, 1000);
+    </script>
+</body>
+</html>
