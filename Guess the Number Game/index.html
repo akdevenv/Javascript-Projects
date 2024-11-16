@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Guess the Number</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+      </head>
+      <body class="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-700 to-blue-900 flex items-center justify-center text-white">
+
+        <!-- Main Container -->
+        <div class="w-full max-w-md bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-8 space-y-6">
+    
+            <!-- Game Title -->
+            <h1 class="text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-600">
+                Guess the Number
+            </h1>
+    
+            <!-- Input Field -->
+            <div>
+                <label for="guess" class="block text-lg font-medium mb-2 text-white/80">Your Guess:</label>
+                <input 
+                    id="guess" 
+                    type="number" 
+                    placeholder="Enter a number" 
+                    class="w-full p-4 text-gray-800 bg-white/30 rounded-xl border border-white/40 focus:outline-none focus:ring-2 focus:ring-pink-400"
+                />
+            </div>
+    
+            <!-- Buttons -->
+            <div class="space-y-4">
+                <button 
+                    id="submit" 
+                    class="w-full py-3 text-lg font-semibold bg-gradient-to-r from-green-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 rounded-xl shadow-md transition-transform transform hover:scale-105">
+                    Submit
+                </button>
+                <button 
+                    id="reset" 
+                    class="w-full py-3 text-lg font-semibold bg-gradient-to-r from-red-400 to-pink-500 hover:from-purple-600 hover:to-red-400 rounded-xl shadow-md hidden transition-transform transform hover:scale-105">
+                    Reset Game
+                </button>
+            </div>
+    
+            <!-- Chances Left -->
+            <div id="chances" class="text-lg font-medium text-center">
+                Chances Left: <span class="font-bold text-yellow-300">10</span>
+            </div>
+    
+            <!-- Result -->
+            <div id="result" class="text-2xl font-semibold text-center text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-blue-500"></div>
+    
+            <!-- Feedback -->
+            <div id="feedback" class="text-lg text-center text-white/80"></div>
+        </div>
+    <script>
+        // Generate the random number
+        const randomNumber = Math.floor(Math.random() * 100) + 1;
+
+        const chances = document.getElementById("chances");
+        const guessedNumber = document.getElementById("guess");
+        const submitBtn = document.getElementById("submit");
+        const resetBtn = document.getElementById("reset");
+        const feedback = document.getElementById("feedback");
+        const result = document.getElementById("result");
+
+        let chancesLeft = 10; // Total number of chances for the user
+        let previousGuess = []; // Array to store previous guesses
+
+        // Function to verify the input and check the guess
+        function guessNum() {
+        const enteredNumber = parseInt(guessedNumber.value);
+
+        if (isNaN(enteredNumber) || enteredNumber < 1 || enteredNumber > 100) {
+            feedback.innerHTML = "Please enter a valid number.";
+            feedback.className = "text-yellow-300 text-center font-medium"; // Set warning color
+            return;
+        }
+
+        if (randomNumber === enteredNumber) {
+            result.innerHTML = "🎉 You win!!!!";
+            result.className = "text-emerald-400 text-center font-bold"; // Winning color
+            endGame();
+        } else if (randomNumber < enteredNumber) {
+            result.innerHTML = "📉 Too High! Try Again.";
+            result.className = "text-red-400 text-center font-bold"; // Hint for too high
+        } else {
+            result.innerHTML = "📈 Too Low! Try Again.";
+            result.className = "text-blue-400 text-center font-bold"; // Hint for too low
+        }
+
+        chancesLeft--;
+        chances.innerHTML = `Chances Left: <span class="font-bold text-yellow-300">${chancesLeft}</span>`;
+        previousGuess.push(enteredNumber);
+        feedback.innerHTML = `Previous Guesses: <span class="font-bold text-purple-300">${previousGuess.join(", ")}</span>`;
+        feedback.className = "text-center font-medium"; // Reset feedback style
+
+        if (chancesLeft === 0) {
+            feedback.innerHTML = `💀 GAME OVER! The number was <span class="font-bold text-pink-400">${randomNumber}</span>`;
+            feedback.className = "text-center font-medium text-red-500";
+            endGame();
+        }
+        }
+
+        // Function to end the game and reveal the reset button
+        function endGame() {
+        submitBtn.disabled = true;
+        resetBtn.classList.remove("hidden");
+        }
+
+        // Function to reset the game
+        function resetGame() {
+        chancesLeft = 10;
+        previousGuess = [];
+        guessedNumber.value = "";
+
+        feedback.innerHTML = "";
+        result.innerHTML = "";
+        chances.innerHTML = `Chances Left: <span class="font-bold text-yellow-300">10</span>`;
+
+        submitBtn.disabled = false;
+        resetBtn.classList.add("hidden");
+        }
+
+        // Event listeners
+        submitBtn.addEventListener("click", guessNum);
+        resetBtn.addEventListener("click", resetGame);
+    </script>
+</body>
+</html>
