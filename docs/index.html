@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Classy BMI Calculator</title>
+</head>
+<body class="bg-gradient-to-r from-indigo-900 via-purple-900 to-gray-900 text-white font-sans min-h-screen flex items-center justify-center p-6">
+
+    <!-- BMI Calculator Container -->
+    <div class="bg-gray-800 bg-opacity-50 backdrop-blur-lg shadow-xl rounded-lg border border-gray-600 p-10 max-w-lg w-full text-center space-y-6 transform transition-transform duration-300 hover:scale-105">
+        <h1 class="text-4xl font-extrabold text-indigo-300 mb-2">BMI Calculator</h1>
+        <p class="text-gray-300 mb-6">Enter your details below to calculate your BMI and check your health status.</p>
+        
+        <!-- Input Form -->
+        <form>
+            <div class="space-y-6">
+                <div>
+                    <label for="height" class="block text-lg font-semibold text-indigo-200 mb-2">Height (cm):</label>
+                    <input type="number" id="height" class="w-full mt-1 p-3 rounded-lg bg-gray-900 bg-opacity-50 text-white placeholder-gray-500 outline-none border border-gray-600 focus:ring-2 focus:ring-indigo-400" placeholder="e.g., 175">
+                </div>
+                <div>
+                    <label for="weight" class="block text-lg font-semibold text-indigo-200 mb-2">Weight (kg):</label>
+                    <input type="number" id="weight" class="w-full mt-1 p-3 rounded-lg bg-gray-900 bg-opacity-50 text-white placeholder-gray-500 outline-none border border-gray-600 focus:ring-2 focus:ring-indigo-400" placeholder="e.g., 70">
+                </div>
+                <button class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-lg shadow-md transition-all duration-300 transform hover:scale-105 focus:outline-none">Calculate BMI</button>          
+            </div>
+
+            <!-- Output Result -->
+            <div id="result" class="mt-6 text-lg font-semibold"></div>
+        </form>
+    </div>
+
+    <!-- JavaScript for BMI Calculation -->
+    <script>
+        // Selecting the form element
+        const form = document.querySelector('form');    
+
+        // Adding an event listener to the form to handle submission
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();  // Prevents the page from reloading on form submission
+
+            // Variables to hold BMI category and input values
+            let category = "";
+            const height = parseFloat(document.getElementById("height").value);
+            const weight = parseFloat(document.getElementById("weight").value);
+
+            // Check if inputs are valid numbers
+            if (!height || !weight) {
+                // If inputs are invalid, display an error message
+                document.getElementById("result").innerHTML = `<span class="text-red-500">Please enter valid height and weight!</span>`;
+                return;
+            }
+
+            // Calculate BMI with the formula and round to two decimal places
+            const bmi = ((weight / (height * height)) * 10000).toFixed(2);  // toFixed(2) to display only 2 decimal points
+
+            // Determine the BMI category based on calculated BMI
+            if (bmi < 18.5) {
+                category = `<span class="text-yellow-400">Underweight</span>`;
+            } else if (bmi >= 18.5 && bmi <= 24.9) {
+                category = `<span class="text-green-400">Fit</span>`;
+            } else {
+                category = `<span class="text-red-400">Overweight</span>`;
+            }
+
+            // Display the result with the calculated BMI and category
+            document.getElementById("result").innerHTML = `Your BMI is <span class="font-bold text-indigo-300">${bmi}</span> - ${category}`;
+        });
+    </script>
+</body>
+</html>
